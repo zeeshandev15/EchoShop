@@ -6,14 +6,13 @@ import SearchBox from "./SearchBox";
 import Cart from "../carts/Cart";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import AccountPopover from "../account/AccountPopover";
-import {  Search } from "lucide-react";
+import { Search } from "lucide-react";
 import MobileHeader from "./MobileHeader";
 import { Separator } from "../ui/separator";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useMobileSearchModal } from "@/store/mobileSearchStore";
 import Loader from "../others/Loader";
-import DropdownMenuComponent from "../others/DropdownMenu";
 
 const HeaderOne = () => {
   const pathname = usePathname();
@@ -28,7 +27,7 @@ const HeaderOne = () => {
       label: "Shop",
       link: "/shop",
       isActive: pathname.startsWith("/shop"),
-    }
+    },
   ];
 
   const { openModal } = useMobileSearchModal();
@@ -50,7 +49,6 @@ const HeaderOne = () => {
               {link.label}
             </Link>
           ))}
-          <DropdownMenuComponent />
         </ul>
         <div className="flex items-center gap-6 ">
           {/* mobile search option */}

@@ -5,12 +5,10 @@ import Image from "next/image";
 import React from "react";
 import PopularPosts from "@/components/blog/PopularPosts";
 import AboutMe from "@/components/blog/AboutMe";
-import NewsLetterTwo from "@/components/newsLetter/NewsLetterTwo";
 import CommentSection from "@/components/blog/CommentSection";
 
 const BlogTitlePage = ({ params }: { params: { title: string } }) => {
-
-  // get data from server based on the params 
+  // get data from server based on the params
 
   const title = params.title.split("%20").join(" ");
   const blog = blogPosts.find((item) => item.title === title);
@@ -30,8 +28,8 @@ const BlogTitlePage = ({ params }: { params: { title: string } }) => {
           <div key={index} className="relative w-full h-[30rem] mb-8">
             <Image
               className="rounded-md object-contain"
-              src={item.src || ''}
-              alt={item.alt || 'image'}
+              src={item.src || ""}
+              alt={item.alt || "image"}
               layout="fill"
             />
           </div>
@@ -44,10 +42,10 @@ const BlogTitlePage = ({ params }: { params: { title: string } }) => {
     <section>
       <div className="max-w-screen-xl mx-auto p-4 md:p-12">
         <div className="py-2">
-        <BreadcrumbComponent
-          links={["/blog"]}
-          pageText={blog?.title as string}
-        />
+          <BreadcrumbComponent
+            links={["/blog"]}
+            pageText={blog?.title as string}
+          />
         </div>
         {/* blog details  */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full">
@@ -66,7 +64,12 @@ const BlogTitlePage = ({ params }: { params: { title: string } }) => {
               </div>
             </div>
             <div className="relative w-full h-[30rem]">
-            <Image src={blog?.image!} alt={blog?.title!} fill className="rounded-md object-contain" />
+              <Image
+                src={blog?.image!}
+                alt={blog?.title!}
+                fill
+                className="rounded-md object-contain"
+              />
             </div>
             {/* Render Content Dynamically */}
             {renderContent()}
@@ -79,9 +82,6 @@ const BlogTitlePage = ({ params }: { params: { title: string } }) => {
       </div>
       <div>
         <CommentSection />
-      </div>
-      <div>
-        <NewsLetterTwo />
       </div>
     </section>
   );

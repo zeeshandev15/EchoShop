@@ -1,4 +1,3 @@
-import LatestBlogPosts from "@/components/blog/LatestBlogPosts";
 import ShopPageContainer from "@/components/products/ShopPageContainer";
 import Link from "next/link";
 
@@ -28,7 +27,6 @@ const ShopPageTwo = ({ searchParams }: ShopPageTwoProps) => {
       <div className="p-4 lg:px-16">
         <ShopPageContainer gridColumn={4} searchParams={searchParams} />
       </div>
-      <LatestBlogPosts twoColunmHeader={true} />
     </section>
   );
 };
