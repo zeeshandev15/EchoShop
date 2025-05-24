@@ -6,7 +6,7 @@ const Logo = () => {
   return (
     <Link href={"/"} className="flex items-center gap-2 mr-3 md:mr-0">
       <Image src={"/logo.svg"} width={40} height={40} alt="brand" />
-      <p className="text-2xl font-bold">Echo Shop</p>
+      <p className="text-2xl font-bold">Meta Minds</p>
     </Link>
   );
 };

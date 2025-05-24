@@ -1,0 +1,70 @@
+/* Remove if fonts are not used */
+@import '~@fontsource/inter/100.css';
+@import '~@fontsource/inter/200.css';
+@import '~@fontsource/inter/300.css';
+@import '~@fontsource/inter/400.css';
+@import '~@fontsource/inter/500.css';
+@import '~@fontsource/inter/600.css';
+@import '~@fontsource/inter/700.css';
+@import '~@fontsource/inter/800.css';
+@import '~@fontsource/inter/900.css';
+@import '~@fontsource/roboto-mono/300.css';
+@import '~@fontsource/roboto-mono/400.css';
+@import '~@fontsource/plus-jakarta-sans/600.css';
+@import '~@fontsource/plus-jakarta-sans/700.css';
+
+/* Variables */
+:root {
+  --icon-fontSize-sm: 1rem;
+  --icon-fontSize-md: 1.25rem;
+  --icon-fontSize-lg: 1.5rem;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--mui-palette-primary-main);
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+/* AG Grid Table Styling */
+.ag-theme-alpine-dark {
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  height: 28.25rem !important;
+  width: 100% !important;
+}
+
+/* Table Header Styling */
+.ag-theme-alpine-dark .ag-header {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+  font-weight: bold;
+  text-align: center;
+  height: 2rem !important;
+}
+
+.ag-theme-alpine-dark .ag-cell {
+  font-size: 14px !important;
+  color: white !important;
+  display: flex;
+  align-items: center;
+}
+
+.ag-theme-alpine-dark .ag-row:nth-child(even) {
+  background-color: #2d3748 !important;
+}
+
+.ag-theme-alpine-dark .ag-row:nth-child(odd) {
+  background-color: #1a202c !important;
+}
+
+.ag-theme-alpine-dark .ag-row:hover {
+  background-color: #4a5568 !important;
+  transition: background-color 0.3s ease-in-out;
+}
