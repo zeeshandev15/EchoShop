@@ -41,7 +41,7 @@ const CategoriesCollection = () => {
             Best Deals For You On <span className="text-2xl font-bold">{watches[0].category}</span>
           </h2>
           <div className="grid grid-cols-2 gap-4 place-content-center w-full">
-            {watches?.slice(0, 4)?.map((watch) => (
+            {watches?.slice(0, 4)?.map((watch) => ( 
               <div
                 key={watch.id}
                 className="flex flex-col items-center justify-center text-center gap-2"

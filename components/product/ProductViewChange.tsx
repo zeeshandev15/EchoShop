@@ -29,13 +29,13 @@ const ProductViewChange = ({
       <div className="mr-auto">
         {/* showing total shown result on the page */}
         <p className=" text-base md:text-lg  font-medium capitalize text-muted-foreground  select-none">
-          {`showing ${((currentPage - 1) * itemPerPage) + 1}-${
+          {`showing ${(currentPage - 1) * itemPerPage + 1}-${
             itemPerPage * currentPage
           } of ${totalPages * itemPerPage}`}{" "}
           results
         </p>
       </div>
-      
+
       {/* this product list and cart view functionality is hidden on mobile screen */}
       <div className="hidden lg:flex items-center gap-4">
         <TooltipProvider delayDuration={0}>

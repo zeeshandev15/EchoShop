@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 
 // Defined Zod schema for form validation
 const schema = z.object({
-  firstName: z.string().min(3, "First Name is required"),
+  name: z.string().min(3, "First Name is required"),
   lastName: z.string().min(3, "Last Name is required"),
   address: z.string().min(5, "Address is required"),
   phone: z.string().min(8, "Phone is required"),
@@ -22,6 +22,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const CheckoutForm: React.FC = () => {
+  const signupData = JSON.parse(localStorage.getItem("signupData") || "{}");
+
   // Initialize React Hook Form
   const {
     register,
@@ -29,6 +31,14 @@ const CheckoutForm: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      name: signupData.name,
+      address: signupData.address,
+      phone: signupData.phone,
+      city: signupData.city,
+      zip: signupData.postalCode,
+      country: "Pakistan",
+    },
   });
 
   // Handle form submission
@@ -41,25 +51,14 @@ const CheckoutForm: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="firstName">First Name</Label>
+            <Label htmlFor="name">First Name</Label>
             <Input
-              id="firstName"
-              {...register("firstName")}
+              id="name"
+              {...register("name")}
               className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
             />
-            {errors.firstName && (
-              <span className="text-red-500">{errors.firstName.message}</span>
-            )}
-          </div>
-          <div>
-            <Label htmlFor="lastName">Last Name</Label>
-            <Input
-              id="lastName"
-              {...register("lastName")}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
-            />
-            {errors.lastName && (
-              <span className="text-red-500">{errors.lastName.message}</span>
+            {errors.name && (
+              <span className="text-red-500">{errors.name.message}</span>
             )}
           </div>
         </div>

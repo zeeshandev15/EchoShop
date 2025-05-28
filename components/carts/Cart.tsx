@@ -22,7 +22,7 @@ import { CartItem } from "@/types";
 import { formatPrice } from "@/lib/formatPrice";
 
 const Cart = () => {
-  const { cartItems, getTotalItems, removeFromCart, getTotalPrice } =
+  let { cartItems, getTotalItems, removeFromCart, getTotalPrice } =
     useCartStore();
   const [showSheet, setShowSheet] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -65,7 +65,7 @@ const Cart = () => {
             <SheetDescription className="flex items-start justify-between gap-4 flex-col h-[90vh]">
               <div className="overflow-y-auto">
                 {/* cart items here */}
-                {cartItems.map((item) => (
+                {cartItems?.map((item) => (
                   <div
                     key={item.id}
                     className="flex items-center justify-start gap-2 p-2

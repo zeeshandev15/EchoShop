@@ -185,6 +185,10 @@ const SignUpForm = () => {
   }, [isSubmitSuccessful, reset, voiceMode]);
 
   const onSubmit = (data: SignUpFormData) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("signupData", JSON.stringify(data));
+    }
+
     console.log("Submitted:", data);
     if (voiceMode) {
       speak("Form submitted successfully!");

@@ -14,13 +14,14 @@ export type Product = {
   color?: string[];
   stockItems: number;
   images: string[];
+  slug?: number;
 };
 
 export type Review = {
   author: string;
   image: string;
   content: string;
-  rating:number
+  rating: number;
   date: Date;
 };
 

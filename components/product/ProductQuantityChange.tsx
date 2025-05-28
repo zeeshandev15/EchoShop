@@ -23,7 +23,7 @@ const ProductQuantityChange = ({
       </Button>
       <p className="text-lg font-semibold">{quantity}</p>
       <Button
-        onClick={() => setQuantity(quantity + 1)}
+        onClick={() => setQuantity(quantity)}
         className="p-4 rounded-full"
         variant={"outline"}
       >

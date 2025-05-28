@@ -1,3 +1,4 @@
+// Updated ShopPageContainer.tsx
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
 import ProductViewChange from "../product/ProductViewChange";
@@ -27,32 +28,27 @@ const ShopPageContainer = ({
   );
   const itemsPerPage = 6;
 
-  // Function to filter data based on search params
   const filterData = () => {
     let filteredProducts = productsData;
 
-    // Filter by category
     if (searchParams.category) {
       filteredProducts = filteredProducts.filter(
         (product) => product.category === searchParams.category
       );
     }
 
-    // Filter by brand
     if (searchParams.brand) {
       filteredProducts = filteredProducts.filter(
         (product) => product?.brand === searchParams.brand
       );
     }
 
-    // Filter by color
     if (searchParams.color) {
       filteredProducts = filteredProducts.filter((product) =>
         product?.color.includes(searchParams.color)
       );
     }
 
-    // Filter by min and max price
     if (searchParams.min && searchParams.max) {
       const minPrice = parseFloat(searchParams.min);
       const maxPrice = parseFloat(searchParams.max);
@@ -61,27 +57,21 @@ const ShopPageContainer = ({
       );
     }
 
-    // Apply other filters...
-
     return filteredProducts;
   };
 
-  // Update filtered data whenever search params change
   useEffect(() => {
     setLoading(true);
     const filteredProducts = filterData();
-    setFilteredData(filteredProducts!);
-    setCurrentPage(1); // Reset pagination to first page when filters change
+    setFilteredData(filteredProducts);
+    setCurrentPage(1);
     setLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-  // change currentPage when searchparams page change
   useEffect(() => {
     setCurrentPage(Number(searchParams.page) || 1);
   }, [searchParams.page]);
 
-  // Update paginated data whenever filtered data or pagination settings change
   useEffect(() => {
     setLoading(true);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -90,6 +80,66 @@ const ShopPageContainer = ({
     setPaginatedData(paginatedProducts);
     setLoading(false);
   }, [filteredData, currentPage]);
+
+  useEffect(() => {
+    if (paginatedData.length > 0) {
+      const utterance = new SpeechSynthesisUtterance(
+        paginatedData.map((p, i) => `Product ${i + 1}: ${p.name}`).join(". ")
+      );
+      speechSynthesis.speak(utterance);
+
+      utterance.onend = () => {
+        askWhichProductToOpen();
+      };
+    }
+  }, [paginatedData]);
+
+  const askWhichProductToOpen = () => {
+    const askUtterance = new SpeechSynthesisUtterance(
+      "Which product would you like to open? Say for example, Product 1 or Product 2."
+    );
+    speechSynthesis.speak(askUtterance);
+
+    askUtterance.onend = () => {
+      listenToProductSelection();
+    };
+  };
+
+  const listenToProductSelection = () => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = (event: any) => {
+      const result = event.results[0][0].transcript.toLowerCase();
+      console.log("User said:", result);
+
+      const match = result.match(/product (\d+)/);
+      if (match) {
+        const index = parseInt(match[1], 10) - 1;
+        const selectedProduct = paginatedData[index];
+
+        if (selectedProduct) {
+          window.location.href = `/shop/${selectedProduct.id}`;
+        }
+      } else {
+        const errorUtterance = new SpeechSynthesisUtterance(
+          "Sorry, I didn't catch that. Please say Product 1 or Product 2."
+        );
+        speechSynthesis.speak(errorUtterance);
+      }
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error", event);
+    };
+  };
 
   if (loading) {
     return (
@@ -117,7 +167,6 @@ const ShopPageContainer = ({
 
   return (
     <div className="md:ml-4 p-2 md:p-0">
-      {/* product status and filter options */}
       <ProductViewChange
         listView={listView}
         setListView={setListView}
@@ -126,20 +175,17 @@ const ShopPageContainer = ({
         currentPage={currentPage}
       />
 
-      {/* showing product list or cart view based on state */}
-      {listView === true && (
+      {listView ? (
         <div className="max-w-screen-xl mx-auto overflow-hidden py-4 md:py-8 gap-4 lg:gap-6">
           {paginatedData.map((product) => (
             <SingleProductListView key={product.id} product={product} />
           ))}
         </div>
-      )}
-
-      {listView === false && (
+      ) : (
         <div
           className={`max-w-screen-xl mx-auto overflow-hidden py-4 md:py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${
             gridColumn || 3
-          } overflow-hidden  gap-4 lg:gap-6`}
+          } gap-4 lg:gap-6`}
         >
           {paginatedData.map((product) => (
             <SingleProductCartView key={product.id} product={product} />
@@ -147,7 +193,6 @@ const ShopPageContainer = ({
         </div>
       )}
 
-      {/* product pagination here */}
       <Suspense fallback={<Loader />}>
         <Pagination
           totalPages={Math.ceil(filteredData.length / itemsPerPage)}
