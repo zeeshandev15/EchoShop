@@ -71,7 +71,7 @@ Make sure you have the following installed on your machine:
 **Cloning the Repository**
 
 ```bash
-git clone https://github.com/Hi-Dear-486/Movie-flix-App.git
+git clone https://github.com/zeeshandev15/EchoShop.git
 cd  ./
 ```
 
